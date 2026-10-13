@@ -1,0 +1,24 @@
+###
+GET http://localhost:3000/personas
+
+###
+###
+GET http://localhost:3000/messi
+###
+GET http://localhost:3000/dimaria
+
+###
+GET http://localhost:3000/dibu
+
+###
+GET http://localhost:3000/enzof
+
+###p
+POST http://localhost:3000/personas
+Content-Type: application/json
+
+{
+  "legajo": 4567 ,
+  "nombre": "Jose Maria de los Palotes",
+  "direccion": "Rawson 123"
+}
