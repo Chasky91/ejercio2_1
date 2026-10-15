@@ -18,20 +18,23 @@ app.get('/personas', async function(req,res){
 
     const respuesta = await pool.query('SELECT * FROM Personas')
     const listado = respuesta[0]
-    //console.log(respuesta) // [ [ datos de las  personas] , [ datos  de la  tabla] ]
-    //console.log(listado)
+
     res.status(200).json(listado)
 })
 
 //http://localhost:3000 "/personas"
-app.post('/personas', function(req,res){
+app.post('/persona', async function(req,res){
   //console.log(req.body, "Datos  de la  persona")
   const  nombre =   req.body.nombre
-  const  direccion = req.body.direccion
-
-  const pool= "pool"
+  const  fechaIngreso = req.body.fechaIngreso
+  const legajo = req.body.legajo
   
-  console.log(pool, "Nombre  de la  persona")
+  console.log(nombre, fechaIngreso, "Datos  de la  persona")
+  const resultado = await pool.execute(
+            `INSERT INTO Personas     (legajo, nombre, fecha_ingreso) VALUES (?, ?,?)`,
+            [ legajo, nombre, fechaIngreso]) //${}
+             
+  console.log(resultado, "Resultado  de la  insercion")
   res.json({
     nombrejson: nombre,
   })
