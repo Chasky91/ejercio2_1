@@ -22,6 +22,25 @@ app.get('/personas', async function(req,res){
     res.status(200).json(listado)
 })
 
+app.put('/persona',function(req, res) {
+  const legajo = req.body.legajo
+  console.log(typeof legajo)
+
+  try{
+    const  existe = pool.execute("SELECT * FROM Personas WHERE legajo = ?",
+    [legajo])
+    
+  }catch(err){
+
+  }
+  //recuperar id legajo 
+  //comprabar  que  el id  existe
+  //catualizar  el  registro
+  //si  es  correcto,  actualizacion  correcta
+  //Si  incorrecta ,  ni  se  pudo  actulizar  el usuario
+  res.send("Actualizar")
+})
+
 //http://localhost:3000 "/personas"
 app.post('/persona', async function(req,res){
   //console.log(req.body, "Datos  de la  persona")
@@ -30,14 +49,28 @@ app.post('/persona', async function(req,res){
   const legajo = req.body.legajo
   
   console.log(nombre, fechaIngreso, "Datos  de la  persona")
-  const resultado = await pool.execute(
-            `INSERT INTO Personas     (legajo, nombre, fecha_ingreso) VALUES (?, ?,?)`,
+
+  try{
+    const resultado = await pool.execute(
+            `INSERT INTO Personas     (legajo, nombre, fecha_ingreso) 
+            VALUES (?, ?,?)`,
             [ legajo, nombre, fechaIngreso]) //${}
-             
+      res.json({
+        nombrejson: nombre,
+      })
+  } catch(err){
+    console.log(err)
+    return res.status(503).json({
+      "mensaje":"Error al  intentar crear  el usuario"
+    })
+  }
+  //const resultado = await pool.execute(
+           // `INSERT INTO Personas     (legajo, nombre, fecha_ingreso) VALUES (?, ?,?)`,
+           // [ legajo, nombre, fechaIngreso]) //${}
+  
+  
   console.log(resultado, "Resultado  de la  insercion")
-  res.json({
-    nombrejson: nombre,
-  })
+  
 })
 
 

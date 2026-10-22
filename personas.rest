@@ -3,12 +3,20 @@ GET http://localhost:3000/personas
 
 
 
-###p
+###
 POST http://localhost:3000/persona
 Content-Type: application/json
 
 {
-  "legajo": 1,
-  "nombre": "Jose Maria de los Palotes",
-  "fechaIngreso": "2021-12-12"
+  "legajo": 84589,
+  "nombre": "Maria  Retamales",
+  "fechaIngreso": "2020-12-12"
+}
+
+###
+PUT http://localhost:3000/persona
+Content-Type: application/json
+
+{
+  "legajo": 84589
 }
