@@ -18,5 +18,5 @@ PUT http://localhost:3000/persona
 Content-Type: application/json
 
 {
-  "legajo": 84589
+  "legajo": 8448589
 }

@@ -21,15 +21,26 @@ app.get('/personas', async function(req,res){
 
     res.status(200).json(listado)
 })
-
-app.put('/persona',function(req, res) {
-  const legajo = req.body.legajo
-  console.log(typeof legajo)
+//actualizar
+app.put('/persona',async function(req, res) {
+  //recuperamos  e legajo
+  const legajo = req.body.legajo 
 
   try{
-    const  existe = pool.execute("SELECT * FROM Personas WHERE legajo = ?",
+    const  existe = await pool.execute(
+      "SELECT * FROM Personas WHERE legajo = ?",
     [legajo])
-    
+    console.log(existe[0])
+
+    if(existe[0].length  === 0 ){
+      return res.status(404).json({
+        mensaje:"El  legajo  no  existe"
+      })
+    }
+    const actualizar = pool.execute(
+      "UPDATE Personas SET nombre = ?, fecha_ingreso = ? WHERE legajo= ?",
+      [] 
+    )
   }catch(err){
 
   }
@@ -38,7 +49,6 @@ app.put('/persona',function(req, res) {
   //catualizar  el  registro
   //si  es  correcto,  actualizacion  correcta
   //Si  incorrecta ,  ni  se  pudo  actulizar  el usuario
-  res.send("Actualizar")
 })
 
 //http://localhost:3000 "/personas"
